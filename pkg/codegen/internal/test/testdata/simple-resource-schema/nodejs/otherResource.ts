@@ -52,5 +52,5 @@ export class OtherResource extends pulumi.ComponentResource {
  * The set of arguments for constructing a OtherResource resource.
  */
 export interface OtherResourceArgs {
-    readonly foo?: pulumi.Input<Resource>;
+    readonly foo?: pulumi.Input<Resource | undefined>;
 }
