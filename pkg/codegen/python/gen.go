@@ -603,7 +603,7 @@ func (mod *modContext) genInit(exports []string) string {
 				// better.
 				//
 				// See https://github.com/pulumi/pulumi/issues/7367
-				fmt.Fprintf(w, "    import %s as __%s\n    %s == __%s\n",
+				fmt.Fprintf(w, "    import %s as __%s\n    %s = __%s\n",
 					submod.fullyQualifiedImportName(),
 					unq,
 					unq,
