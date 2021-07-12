@@ -58,6 +58,12 @@ namespace Pulumi.Testing
             return new InvokeResponse { Return = await SerializeAsync(result).ConfigureAwait(false) };
         }
 
+        public async Task<CallResponse> CallAsync(CallRequest request)
+        {
+            // TODO
+            throw new NotSupportedException("Call has not yet been implemented in the MockMonitor.");
+        }
+
         public async Task<ReadResourceResponse> ReadResourceAsync(Resource resource, ReadResourceRequest request)
         {
             var (id, state) = await _mocks.NewResourceAsync(new MockResourceArgs
