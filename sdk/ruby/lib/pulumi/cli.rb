@@ -5,4 +5,12 @@ Signal.trap('INT') do
   exit 1
 end
 
-Pulumi::Command.start(ARGV)
+begin
+  pp Pulumi::Options.project
+  pp Pulumi::Options.program
+  pp Pulumi::Options.args
+rescue OptionParser::MissingArgument => e
+  puts e
+rescue NoMethodError => e
+  puts "missing option: #{e.name}"
+end

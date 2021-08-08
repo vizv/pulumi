@@ -1,18 +1,23 @@
 # frozen_string_literal: true
 
-require 'thor'
+require 'optparse'
 
 module Pulumi
-  class Command < Thor
-    default_task :exec
+  class Command
+    class << self
+      def options
+        Options.options
+        # return @options unless @options.nil?
 
-    desc 'exec', 'Execute a Pulumi Ruby program'
-    method_options project: :string, stack: :string, parallel: :numeric,
-                   dry_run: :boolean, pwd: :string, monitor: :string,
-                   engine: :string, tracing: :string
-    def exec
-      pp options
-      pp VERSION
+        # @options = {}
+
+        # OptionParser.new do |opts|
+        #   opts.banner = "Usage: #{$PROGRAM_NAME} [OPTIONS] PROGRAM ARGS"
+        #   opts.on('--project=PROJECT', 'Set the project name') { |v| @options[:project] = v }
+        # end.parse!
+
+        # @options
+      end
     end
   end
 end
