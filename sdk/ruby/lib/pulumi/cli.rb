@@ -6,9 +6,7 @@ Signal.trap('INT') do
 end
 
 begin
-  pp Pulumi::Options.project
-  pp Pulumi::Options.program
-  pp Pulumi::Options.args
+  Pulumi::Command.run!
 rescue OptionParser::MissingArgument => e
   puts e
 rescue NoMethodError => e
