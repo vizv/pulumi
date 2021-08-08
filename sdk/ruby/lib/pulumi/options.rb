@@ -45,6 +45,8 @@ module Pulumi
         return super unless respond_to?(method)
 
         send(method)
+      rescue NoMethodError => e
+        raise OptionParser::MissingArgument, e.name
       end
     end
 

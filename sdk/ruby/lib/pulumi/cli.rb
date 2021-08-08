@@ -9,6 +9,4 @@ begin
   Pulumi::Command.run!
 rescue OptionParser::MissingArgument => e
   puts e
-rescue NoMethodError => e
-  puts "missing option: #{e.name}"
 end

@@ -3,12 +3,14 @@
 require 'optparse'
 
 module Pulumi
-  class Command
+  module Command
     class << self
       def run!
-        pp Pulumi::Options.project
-        pp Pulumi::Options.program
-        pp Pulumi::Options.args
+        pp Pulumi::Runtime::Env.config_hash
+        pp Pulumi::Runtime::Env.secret_keys
+        # pp Pulumi::Options.project
+        # pp Pulumi::Options.program
+        # pp Pulumi::Options.args
       end
     end
   end
