@@ -396,9 +396,9 @@ func (host *rubyLanguageHost) constructArguments(req *pulumirpc.RunRequest) []st
 	maybeAppendArg("parallel", fmt.Sprint(req.GetParallel()))
 	maybeAppendArg("tracing", host.tracing)
 
-	// If no program is specified, just default to the current directory (which will invoke "__main__.py").
+	// If no program is specified, just default to "stack.rb".
 	if req.GetProgram() == "" {
-		args = append(args, ".")
+		args = append(args, "stack.rb")
 	} else {
 		args = append(args, req.GetProgram())
 	}

@@ -11,11 +11,11 @@ module Pulumi
         define_singleton_method(name) { value }
       end
 
-      private def option(name, help, type: :string)
+      private def option(name, help)
         @parser ||= ::OptionParser.new(BANNER)
 
         opts = "--#{name}"
-        opts += "=#{name.upcase}" if type != :boolean
+        opts += "=#{name.upcase}"
         @parser.on(opts, help) do |value|
           set_attr(name, value)
         end
@@ -48,7 +48,13 @@ module Pulumi
       end
     end
 
+    option :monitor, 'An RPC address for the resource monitor to connect to'
+    option :engine, 'An RPC address for the engine to connect to'
     option :project, 'Set the project name'
     option :stack, 'Set the stack name'
+    option :pwd, 'Change the working directory before running the program'
+    option :dry_run, 'Simulate resource changes, but without making them'
+    option :parallel, 'Run P resource operations in parallel (default=none)'
+    option :tracing, 'A Zipkin-compatible endpoint to send tracing data to'
   end
 end
