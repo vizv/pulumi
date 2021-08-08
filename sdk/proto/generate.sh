@@ -17,9 +17,10 @@ PULUMI_BUILD_CONTAINER_VERSION=v0.2.0
 
 # First pull the image for the Pulumi Build Container
 echo "* Pulling Pulumi Build Container:"
-docker pull "pulumi/pulumi-build-container:${PULUMI_BUILD_CONTAINER_VERSION}"
+# FIXME: test mask
+# docker pull "pulumi/pulumi-build-container:${PULUMI_BUILD_CONTAINER_VERSION}"
 
-DOCKER_RUN="docker run -it --rm -w /local -v $(pwd)/../python:/python -v $(pwd)/../nodejs:/nodejs -v $(pwd):/local pulumi/pulumi-build-container:${PULUMI_BUILD_CONTAINER_VERSION}"
+DOCKER_RUN="docker run -it --rm -w /local -v $(pwd)/../ruby:/ruby -v $(pwd)/../python:/python -v $(pwd)/../nodejs:/nodejs -v $(pwd):/local pulumi/pulumi-build-container:${PULUMI_BUILD_CONTAINER_VERSION}"
 PROTOC="$DOCKER_RUN protoc"
 
 # `status.proto` is in our source tree so that we can implement initialization failure in the
@@ -87,5 +88,15 @@ $DOCKER_RUN /bin/bash -c 'PY_PULUMIRPC=/python/lib/pulumi/runtime/proto/ && \
     python3 -m grpc_tools.protoc -I./ --python_out="$TEMP_DIR" --grpc_python_out="$TEMP_DIR" *.proto && \
     sed -i "s/^import \([^ ]*\)_pb2 as \([^ ]*\)$/from . import \1_pb2 as \2/" "$TEMP_DIR"/*.py && \
     cp "$TEMP_DIR"/*.py "$PY_PULUMIRPC"'
+
+echo -e "\tRuby temp dir: $TEMP_DIR"
+$DOCKER_RUN /bin/bash -c 'RB_PULUMIRPC=/ruby/lib/pulumi/proto/ && \
+    echo -e "\tRuby: $RB_PULUMIRPC" && \
+    TEMP_DIR="/tmp/ruby-build" && \
+    echo -e "\tRuby temp dir: $TEMP_DIR" && \
+    mkdir -p "$TEMP_DIR" && \
+    source /usr/local/rvm/scripts/rvm && \
+    grpc_tools_ruby_protoc -I./ --ruby_out="$TEMP_DIR" --grpc_out="$TEMP_DIR" *.proto && \
+    cp "$TEMP_DIR"/*.rb "$RB_PULUMIRPC"'
 
 echo "* Done."
