@@ -11,7 +11,7 @@ module Pulumi
         define_singleton_method(name) { value }
       end
 
-      private def option(name, help)
+      private def option(name, help, optional: false)
         @parser ||= ::OptionParser.new(BANNER)
 
         opts = "--#{name}"

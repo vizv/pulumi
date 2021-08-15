@@ -9,4 +9,5 @@ begin
   Pulumi::Command.run!
 rescue OptionParser::MissingArgument => e
   puts e
+  exit 1
 end
